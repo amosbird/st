@@ -105,7 +105,7 @@ static void selnotify(XEvent *);
 static void selclear_(XEvent *);
 static void selrequest(XEvent *);
 
-static void selcopy(Time);
+void selcopy(Time);
 static void getbuttoninfo(XEvent *);
 static void mousereport(XEvent *);
 

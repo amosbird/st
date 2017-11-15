@@ -25,7 +25,7 @@ static char vtiden[] = "\033[?6c";
 
 /* Kerning / character bounding-box multipliers */
 float cwscale = 1.0;
-float chscale = 1.0;
+float chscale = 1.1;
 
 /*
  * word delimiter string
@@ -176,6 +176,8 @@ Shortcut shortcuts[] = {
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
+	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
+    { MODKEY,               XK_u,           copyurl,        {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
 	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
@@ -334,8 +336,6 @@ static Key key[] = {
 	{ XK_Return,        Mod1Mask,       "\033\r\n",      0,    0,   +1},
 	{ XK_Return,        XK_ANY_MOD,     "\r",            0,    0,   -1},
 	{ XK_Return,        XK_ANY_MOD,     "\r\n",          0,    0,   +1},
-	{ XK_Insert,        ShiftMask,      "\033[4l",      -1,    0,    0},
-	{ XK_Insert,        ShiftMask,      "\033[2;2~",    +1,    0,    0},
 	{ XK_Insert,        ControlMask,    "\033[L",       -1,    0,    0},
 	{ XK_Insert,        ControlMask,    "\033[2;5~",    +1,    0,    0},
 	{ XK_Insert,        XK_ANY_MOD,     "\033[4h",      -1,    0,    0},
