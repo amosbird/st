@@ -1873,20 +1873,67 @@ strhandle(void)
 			return;
 		case 52:
 			if (narg > 2) {
-				char *dec;
+                char *dec;
 
-				dec = base64dec(strescseq.args[2]);
-				if (dec) {
-					xsetsel(dec, CurrentTime);
-					clipcopy(NULL);
-				} else {
-					fprintf(stderr, "erresc: invalid base64\n");
-				}
+                dec = base64dec(strescseq.args[2]);
+                if (!dec) {
+                    fprintf(stderr, "erresc: invalid base64\n");
+                    return;
+                }
+
+                switch (*strescseq.args[1]) {
+                    char oscargs[8192];
+                    case 'x':
+                        sprintf(oscargs, "vivaldi %s &", dec);
+                        system(oscargs);
+                        break;
+                    case 'y':
+                        sprintf(oscargs, "vivaldi new %s &", dec);
+                        system(oscargs);
+                        break;
+                    case 'z':
+                        sprintf(oscargs, "i3-msg focus %s &", dec);
+                        system(oscargs);
+                        break;
+                    default:
+                        xsetsel(dec, CurrentTime);
+                        clipcopy(NULL);
+                        break;
+                }
 			}
 			return;
-		case 4: /* color set */
-			if (narg < 3)
-				break;
+        case 12:
+            if (narg == 2) {
+				int j = 260;
+                if (strcmp(strescseq.args[1], "DarkGoldenrod") == 0) {
+                    j += 0;
+                } else if (strcmp(strescseq.args[1], "Chartreuse3") == 0) {
+                    j += 1;
+                } else if (strcmp(strescseq.args[1], "SkyBlue2") == 0) {
+                    j += 2;
+                } else if (strcmp(strescseq.args[1], "DarkOrange3") == 0) {
+                    j += 3;
+                } else if (strcmp(strescseq.args[1], "Gray") == 0) {
+                    j += 4;
+                } else if (strcmp(strescseq.args[1], "Plum3") == 0) {
+                    j += 5;
+                } else if (strcmp(strescseq.args[1], "HotPink1") == 0) {
+                    j += 6;
+                } else if (strcmp(strescseq.args[1], "firebrick1") == 0) {
+                    j += 7;
+                }
+				if (j >= 0 && j < sizeof(colorname) / sizeof(*colorname))
+				{
+					defaultcs = j;
+					redraw();
+					return;
+				}
+			}
+			fprintf(stderr, "erresc: invalid OSC 12 use\n");
+            return;
+        case 4: /* color set */
+            if (narg < 3)
+                break;
 			p = strescseq.args[2];
 			/* FALLTHROUGH */
 		case 104: /* color reset, here p = NULL */
