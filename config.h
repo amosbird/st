@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 char font[] = "monospace:pixelsize=18:antialias=true:autohint=true";
-int borderpx = 0;
+int borderpx = 2;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -25,7 +25,7 @@ static char vtiden[] = "\033[?6c";
 
 /* Kerning / character bounding-box multipliers */
 float cwscale = 1.0;
-float chscale = 1.1;
+float chscale = 1.0;
 
 /*
  * word delimiter string
@@ -186,7 +186,6 @@ Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ TERMMOD,              XK_I,           iso14755,       {.i =  0} },
 };
 
 /*
@@ -218,7 +217,13 @@ Shortcut shortcuts[] = {
  * If you want keys other than the X11 function keys (0xFD00 - 0xFFFF)
  * to be mapped below, add them to this array.
  */
-static KeySym mappedkeys[] = { -1 };
+static KeySym mappedkeys[] = {
+    XK_Return,
+    XK_comma,
+    XK_period,
+    XK_S,
+    XK_I
+};
 
 /*
  * State bits to ignore when matching key or button events.  By default,
@@ -258,6 +263,11 @@ static Key key[] = {
 	{ XK_KP_Prior,      ShiftMask,      "\033[5;2~",     0,    0,    0},
 	{ XK_KP_Prior,      XK_ANY_MOD,     "\033[5~",       0,    0,    0},
 	{ XK_KP_Begin,      XK_ANY_MOD,     "\033[E",        0,    0,    0},
+	{ XK_Return,        ControlMask,    "\030@c\015",    0,    0,    0},
+	{ XK_comma,         ControlMask,    "\036",          0,    0,    0},
+	{ XK_period,        ControlMask,    "\037",          0,    0,    0},
+	{ XK_S,             TERMMOD,        "\033`",         0,    0,    0},
+	{ XK_I,             TERMMOD,        "\033[Z",        0,    0,    0},
 	{ XK_KP_End,        ControlMask,    "\033[J",       -1,    0,    0},
 	{ XK_KP_End,        ControlMask,    "\033[1;5F",    +1,    0,    0},
 	{ XK_KP_End,        ShiftMask,      "\033[K",       -1,    0,    0},
